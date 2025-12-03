@@ -15,6 +15,13 @@ pipeline {
 
     stages {
 
+        stage('Check Docker Access') {
+    steps {
+        sh 'docker ps'
+    }
+}
+
+
         stage('GIT') {
             steps {
                 git branch: 'main',
