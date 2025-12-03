@@ -57,6 +57,6 @@ pipeline {
                     docker push ${IMAGE_NAME}:${IMAGE_TAG}
                 """
             }
-        }
+        }//
 
-}
+}//
