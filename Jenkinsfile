@@ -8,19 +8,16 @@ pipeline {
 
     environment {
         REGISTRY = "docker.io"
-        IMAGE_NAME = "eyaezdine/maven"
+        IMAGE_NAME = "eyaezdine/myapp"  // CHANGÉ ICI
         IMAGE_TAG = "latest"
     }
 
-
     stages {
-
         stage('Check Docker Access') {
-    steps {
-        sh 'docker ps'
-    }
-}
-
+            steps {
+                sh 'docker ps'
+            }
+        }
 
         stage('GIT') {
             steps {
@@ -38,18 +35,17 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 sh """
-                    docker build -t eyaezdine/maven:latest .
+                    docker build -t eyaezdine/myapp:latest .  // CHANGÉ ICI
                 """
             }
         }
 
-      stage('Login to Docker Hub') {
+        stage('Login to Docker Hub') {
             steps {
                 withCredentials([usernamePassword(
                     credentialsId: 'dockerhub',
                     usernameVariable: 'DOCKERHUB_USERNAME',
                     passwordVariable: 'DOCKERHUB_PASSWORD'
-
                 )]) {
                     sh """
                         echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
@@ -61,9 +57,9 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 sh """
-                    docker push ${IMAGE_NAME}:${IMAGE_TAG}
+                    docker push ${IMAGE_NAME}:${IMAGE_TAG}  // UTILISE LA VARIABLE CORRIGÉE
                 """
             }
         }
-    }//
-}//
+    }
+}
