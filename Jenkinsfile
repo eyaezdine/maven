@@ -34,9 +34,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh """
-                    docker build -t eyaezdine/myapp:latest .  // CHANGÉ ICI
-                """
+                sh "docker build -t eyaezdine/myapp:latest ."
             }
         }
 
