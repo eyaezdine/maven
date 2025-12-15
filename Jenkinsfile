@@ -2,14 +2,8 @@ pipeline {
     agent any
 
     tools {
-    jdk 'jdk17'
-    maven 'Maven 3.9.3'
-    }
-
-    environment {
-        REGISTRY = "docker.io"
-        IMAGE_NAME = "eyaezdine/myapp"  // CHANGÉ ICI
-        IMAGE_TAG = "latest"
+        jdk 'jdk17'
+        maven 'Maven 3.9.3'
     }
 
     stages {
@@ -46,7 +40,7 @@ pipeline {
                     passwordVariable: 'DOCKERHUB_PASSWORD'
                 )]) {
                     sh """
-                        echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
+                        echo \$DOCKERHUB_PASSWORD | docker login -u \$DOCKERHUB_USERNAME --password-stdin
                     """
                 }
             }
@@ -54,9 +48,7 @@ pipeline {
 
         stage('Push Docker Image') {
             steps {
-                sh """
-                    docker push ${IMAGE_NAME}:${IMAGE_TAG}  // UTILISE LA VARIABLE CORRIGÉE
-                """
+                sh "docker push eyaezdine/myapp:latest"
             }
         }
     }
